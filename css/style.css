@@ -1,0 +1,357 @@
+body {
+  background-color: lightgrey;
+  max-width: 1440px;
+  margin: auto;
+}
+body img {
+  object-fit: cover;
+}
+body * {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+.entete {
+  width: 100%;
+  height: 667px;
+  background-image: url("../assets/Photos/Recette24.jpg");
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.entete .fa-regular, .entete .fa-solid {
+  color: white;
+}
+.entete::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.entete * {
+  z-index: 1;
+}
+.entete .logo {
+  color: white;
+  position: absolute;
+  top: 51px;
+  left: 69px;
+  text-transform: uppercase;
+}
+.entete .logo .fa-circle-dot {
+  font-size: 15px;
+}
+.entete .titre {
+  font-size: 44px;
+  color: #FFD15B;
+  width: 890px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.entete .recherche {
+  display: inherit;
+  flex-direction: row;
+  height: auto;
+  position: relative;
+}
+.entete .recherche .rechercheBar {
+  width: 954px;
+  height: 72px;
+  border-radius: 11px;
+  padding: 0px 35px;
+  color: #7A7A7A;
+}
+.entete .recherche .rechercheBar:focus {
+  outline: none;
+}
+.entete .recherche .iconRecherche {
+  background-color: black;
+  width: 51px;
+  height: 52px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.entete .recherche .iconRecherche .fa-magnifying-glass {
+  font-size: 30px;
+  align-self: center;
+}
+.entete .recherche .iconRecherche:hover {
+  background-color: #FFD15B;
+}
+.entete .recherche .iconRecherche:hover .fa-magnifying-glass {
+  color: #000000;
+}
+
+main {
+  padding: 28px 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  height: auto;
+}
+main .sectionRecherche {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+main .sectionRecherche nav {
+  display: inherit;
+  gap: 63px;
+  position: relative;
+}
+main .sectionRecherche nav .rechercheBar {
+  position: absolute;
+  top: 50px;
+  height: 36px;
+  width: 163px;
+  color: #C6C6C6;
+  border: 1px solid #C6C6C6;
+  padding: 0px 5px;
+  align-items: center;
+  background-color: white;
+  gap: 3px;
+  z-index: 1;
+}
+main .sectionRecherche nav .rechercheBar input {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+main .sectionRecherche nav .rechercheBar input:focus {
+  outline: none;
+}
+main .sectionRecherche nav .rechercheBar .iconRecherche, main .sectionRecherche nav .rechercheBar .iconSupprimer {
+  color: #7A7A7A;
+  padding: 0px 3px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+main .sectionRecherche nav .rechercheBar .iconSupprimer.cache {
+  display: none;
+}
+main .sectionRecherche nav .rechercheBar .iconSupprimer.affiche {
+  display: flex;
+}
+main .sectionRecherche nav .rechercheBar.affiche {
+  display: flex;
+}
+main .sectionRecherche nav .rechercheBar.cache {
+  display: none;
+}
+main .sectionRecherche nav .position1 {
+  left: 16px;
+}
+main .sectionRecherche nav .position2 {
+  left: 275px;
+}
+main .sectionRecherche nav .position3 {
+  left: 532px;
+}
+main .sectionRecherche nav .titre {
+  padding: 17px 16px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  height: auto;
+  width: 195px;
+  height: 56px;
+  border-radius: 11px;
+  background-color: white;
+}
+main .sectionRecherche nav .titre.listeOuverte {
+  padding-bottom: 90px;
+}
+main .sectionRecherche nav .rechercheList {
+  width: 195px;
+  height: 56px;
+  border-radius: 0px 0px 11px 11px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: 0px;
+}
+main .sectionRecherche nav .rechercheList li {
+  padding: 17px 16px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 37px;
+  font-size: 16px;
+  list-style: none;
+  cursor: pointer;
+}
+main .sectionRecherche nav .rechercheList li:hover {
+  background-color: #FFD15B;
+}
+main .sectionRecherche nav .rechercheList.ouvert {
+  display: flex;
+  overflow: auto;
+  height: auto;
+  max-height: 315px;
+  position: relative;
+  top: -10px;
+}
+main .sectionRecherche nav .rechercheList.reduit {
+  display: none;
+}
+main .sectionRecherche .nbRecettes {
+  font-size: 21px;
+  text-align: left;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  align-self: baseline;
+  height: 55px;
+}
+main .motsCles {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  column-gap: 60px;
+  row-gap: 10px;
+  flex-wrap: wrap;
+}
+main .motsCles .motCle {
+  font-size: 14px;
+  width: 203px;
+  height: 53px;
+  padding: 17px 18px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #FFD15B;
+  align-items: center;
+}
+main .motsCles .motCle .fa-xmark {
+  cursor: pointer;
+}
+main .motsCles .motCle .fa-circle-xmark {
+  cursor: pointer;
+  display: none;
+}
+main .motsCles .motCle:hover {
+  font-weight: bold;
+}
+main .motsCles .motCle:hover .fa-xmark {
+  display: none;
+}
+main .motsCles .motCle:hover .fa-circle-xmark {
+  cursor: pointer;
+  display: flex;
+}
+main .recettes.vide {
+  display: none;
+}
+main .recettes.plein {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 60px;
+}
+main .recettes .recette {
+  width: 380px;
+  height: auto;
+  border-radius: 21px;
+  background-color: white;
+  box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.0392156863);
+  position: relative;
+}
+main .recettes .recette img {
+  width: 100%;
+  height: 253px;
+  border-radius: 21px 21px 0px 0px;
+}
+main .recettes .recette .temps {
+  position: absolute;
+  width: 65px;
+  height: 26px;
+  top: 21px;
+  right: 20px;
+  padding: 5px 15px;
+  border-radius: 14px;
+  background-color: #FFD15B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .recettes .recette .content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+main .recettes .recette .content h2 {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+main .recettes .recette .content h3 {
+  color: grey;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+main .recettes .recette .content .description {
+  font-size: 14px;
+  color: #1B1B1B;
+}
+main .recettes .recette .content .ingredients {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 32px;
+}
+main .recettes .recette .content .ingredients .ingredient {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+main .recettes .recette .content .ingredients .ingredient .h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1B1B1B;
+}
+main .recettes .recette .content .ingredients .ingredient p {
+  font-size: 14px;
+  color: #7A7A7A;
+}
+main .info {
+  width: 100%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  background-color: #FFD15B;
+  border-radius: 20px;
+}
+main .info.cache {
+  display: none;
+}
+main .info.affiche {
+  display: flex;
+}
+
+/*# sourceMappingURL=style.css.map */

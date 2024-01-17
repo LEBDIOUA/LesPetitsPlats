@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='fr'>
+  <head>
+    <link href='css/style.css' rel='stylesheet' type='text/css' />
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel='icon' type='image/png' href='assets/favicon.png'> -->
+    <script src="https://kit.fontawesome.com/798bd98a41.js" crossorigin="anonymous"></script>
+    <script type='module' src='scripts/main.js' defer></script>
+    <title>Les petits plats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+  <body>
+    <header class='entete'>
+        <p class='logo' aria-label='Le titre de la page: Les petits plats'>Les petits plats <i class="fa-regular fa-circle-dot"></i></p>
+        <h1 class="titre"> Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
+        <div class='recherche'>
+          <input type='text' class='rechercheBar' placeholder='Rechercher une recette, un ingrédient, ...' />
+          <div class="iconRecherche"><i class="fa-solid fa-magnifying-glass"></i></div>
+        </div>
+    </header>
+    <main>
+      <section class='sectionRecherche'>
+        <nav>
+          <div class='rechercheBar position1 cache'>
+            <input type='text' class='aRechercher' id='aRechercher'/>
+            <span class="iconSupprimer cache"><i class="fa-solid fa-xmark"></i></span>
+            <span class="iconRecherche"><i class="fa-solid fa-magnifying-glass"></i></span>
+          </div>
+          <div>
+            <p class='titre' id='ingredients'>
+              Ingrédients
+              <i class = 'fa-solid fa-chevron-down'></i>
+            </p>
+            <ul id="ingredientsListe" role='listbox' class='rechercheList reduit' data-id='0'></ul>
+          </div>
+          <div>
+            <p class='titre' id='appareils'>
+              Appareils
+              <i class = 'fa-solid fa-chevron-down'></i>
+            </p>
+            <ul id="appareilsListe" role='listbox' class='rechercheList reduit' data-id='1'></ul>
+          </div>
+          <div>
+            <p class='titre' id='ustensiles'>
+              Ustensiles
+              <i class = 'fa-solid fa-chevron-down'></i>
+            </p>
+            <ul id="ustensilesListe" role='listbox' class='rechercheList reduit' data-id='2'></ul>
+          </div>
+        </nav>
+        <p class='nbRecettes'>1500 recettes</p>
+      </section>
+      <section class='motsCles'></section>
+      <section class='recettes vide'></section>
+      <div class="info cache">Aucune recette trouvée avec ces critères de recherche</div>
+    </main>
+  </body>
+</html>
