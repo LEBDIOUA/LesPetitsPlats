@@ -26,14 +26,14 @@ class Model {
 	async getData() {
 		const url = '../data/recipes.json';
 		this.data = await this.get(url);
-		// const linkExists = await this.verifierLien(url);
+		const linkExists = await this.verifierLien(url);
 
-		// if (linkExists) {
-		// 	this.data = await this.get(url);
-		// } 
-		// else {
-		// 	this.data = await this.get('/Fisheye/data/photographers.json');
-		// }
+		if (linkExists) {
+			this.data = await this.get(url);
+		} 
+		else {
+			this.data = await this.get('/LesPetitsPlats/data/photographers.json');
+		}
 		return this.data;
 	}
 
@@ -50,9 +50,6 @@ class Model {
 	async obtenirRecettes() {
 		const data = await this.getData();
 		const recettes = data.recipes.map(recette => new Recette(recette));
-		// for (let i = 0; i < data.recipes.length; i++) {
-		// 	recettes.push(new Recette(data.recipes[i]));
-		// }
 		return recettes;
 	}
 
