@@ -9,7 +9,7 @@ class RecettesView{
 		let content = `
 			<article class='recette'>
                 <div class='temps'>${recette.getTime}min</div>
-				<img src='../assets/Photos/${recette.getImage}' title='Photo de ${recette.getImage}' alt='${recette.getImage}'>
+				<img src='./assets/Photos/${recette.getImage}' title='Photo de ${recette.getImage}' alt='${recette.getImage}'>
                 <div class='content'>
                     <h2>${recette.getName}</h2>
                     <h3>Recette</h3>
