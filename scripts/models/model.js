@@ -32,7 +32,7 @@ class Model {
 			this.data = await this.get(url);
 		} 
 		else {
-			this.data = await this.get('/LesPetitsPlats/data/photographers.json');
+			this.data = await this.get('/LesPetitsPlats/data/recipes.json');
 		}
 		return this.data;
 	}
