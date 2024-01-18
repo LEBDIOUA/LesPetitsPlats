@@ -30,10 +30,10 @@ class Model {
 
 		if (linkExists) {
 			this.data = await this.get(url);
-		} 
-		else {
+		} else {
 			this.data = await this.get('/LesPetitsPlats/data/recipes.json');
 		}
+
 		return this.data;
 	}
 
@@ -53,7 +53,7 @@ class Model {
 		return recettes;
 	}
 
-	async rechercherRecettes(texte, ingredients, appareils, ustensiles){
+	async rechercherRecettes(texte, ingredients, appareils, ustensiles) {
 		let recettes = await this.obtenirRecettes();
 		recettes = this.obtenirRecettesParTexte(recettes, texte);
 		recettes = this.obtenirRecettesParIngredients(recettes, ingredients);
@@ -62,97 +62,98 @@ class Model {
 		return recettes;
 	}
 
-	obtenirRecettesParTexte(recettes, motCle){
-		let resultat = recettes.filter(recette =>
-			recette.getName.toLowerCase().includes(motCle) ||
-			recette.getDescription.toLowerCase().includes(motCle)
-		);
+	obtenirRecettesParTexte(recettes, motCle) {
+		let resultat = recettes.filter(recette => recette.getName.toLowerCase().includes(motCle) || recette.getDescription.toLowerCase().includes(motCle));
 		if (resultat.length === 0) {
-			resultat = recettes.filter(recette => {
-				recette.getIngredients.map(ingredients => 
-					ingredients.ingredient.toLowerCase().includes(motCle))
-			});
+			resultat = recettes.filter(recette => recette.getIngredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(motCle)));
 		}
+
 		return resultat;
 	}
 
-	obtenirRecettesParIngredients(recettes, motsCles){
+	obtenirRecettesParIngredients(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
-			/*recettes.some(recette => {
-				const ingredientsTrouves = recette.getIngredients.filter(ingredient =>
-					motsCles.includes(ingredient.getIngredient.toLowerCase())
-				);
-		
+		if (motsCles.length > 0) {
+			/* Recettes.some(recette => {
+				const ingredientsTrouves = recette.getIngredients.filter(ingredient => {
+					if(motsCles.includes(ingredient.getIngredient.toLowerCase())){
+						return ingredient;
+					}
+				});
+
 				if (ingredientsTrouves.length === motsCles.length) {
 					resultat.push(recette);
 				}
-			});*/
+				return false;
+			}); */
 
-			/*Un algorithme qui évite de continuer à parcourir le reste des ingrédients 
-			si, par exemple, on a 3 mots cles à trouver et il ne reste que 2 ingredients*/
+			/* Un algorithme qui évite de continuer à parcourir le reste des ingrédients
+			si, par exemple, on a 3 mots cles à trouver et il ne reste que 2 ingredients */
 			recettes.some(recette => {
 				const ingredientsTrouves = [];
-				for(let i=0; i<recette.getIngredients.length; i++){
+				for (let i = 0; i < recette.getIngredients.length; i++) {
 					const ingredient = recette.getIngredients[i].getIngredient.toLowerCase();
-					if(motsCles.includes(ingredient)){
+					if (motsCles.includes(ingredient)) {
 						ingredientsTrouves.push(ingredient);
 					}
-					if(ingredientsTrouves.length === motsCles.length || i > recette.getIngredients.length - motsCles.length ){
+
+					if (ingredientsTrouves.length === motsCles.length || i > recette.getIngredients.length - motsCles.length) {
 						break;
 					}
 				}
-			
+
 				if (ingredientsTrouves.length === motsCles.length) {
 					resultat.push(recette);
-					return false
+					return false;
 				}
+
+				return false;
 			});
-		}
-		else{
+		} else {
 			resultat = recettes;
 		}
 
 		return resultat;
 	}
 
-	obtenirRecettesParAppareils(recettes, motsCles){
+	obtenirRecettesParAppareils(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
-			resultat = recettes.filter(recette =>
-				motsCles.includes(recette.getAppliance.toLowerCase())
-			)
-		}
-		else{
+		if (motsCles.length > 0) {
+			resultat = recettes.filter(recette => (motsCles.includes(recette.getAppliance.toLowerCase())));
+		} else {
 			resultat = recettes;
 		}
+
 		return resultat;
 	}
 
-	obtenirRecettesParUstensiles(recettes, motsCles){
+	obtenirRecettesParUstensiles(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
+		if (motsCles.length > 0) {
 			recettes.some(recette => {
 				const ustensilesTrouves = [];
-				for(let i=0; i<recette.getUstensiles.length; i++){
-					const ustensile = recette.getUstensiles[i].toLowerCase();
-					if(motsCles.includes(ustensile)){
+				for (let i = 0; i < recette.getUstensils.length; i++) {
+					const ustensile = recette.getUstensils[i].toLowerCase();
+					if (motsCles.includes(ustensile)) {
 						ustensilesTrouves.push(ustensile);
 					}
-					if(ustensilesTrouves.length === motsCles.length || i > recette.getUstensiles.length - motsCles.length ){
+
+					if (ustensilesTrouves.length === motsCles.length || i > recette.getUstensils.length - motsCles.length) {
 						break;
 					}
 				}
-			
+
 				if (ustensilesTrouves.length === motsCles.length) {
 					resultat.push(recette);
-					return false
+					return false;
 				}
+
+				return false;
 			});
-		}
-		else{
+		} else {
 			resultat = recettes;
 		}
+
 		return resultat;
 	}
 }
