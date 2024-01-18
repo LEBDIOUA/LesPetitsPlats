@@ -26,14 +26,14 @@ class Model {
 	async getData() {
 		const url = '../data/recipes.json';
 		this.data = await this.get(url);
-		// const linkExists = await this.verifierLien(url);
+		const linkExists = await this.verifierLien(url);
 
-		// if (linkExists) {
-		// 	this.data = await this.get(url);
-		// } 
-		// else {
-		// 	this.data = await this.get('/Fisheye/data/photographers.json');
-		// }
+		if (linkExists) {
+			this.data = await this.get(url);
+		} else {
+			this.data = await this.get('/LesPetitsPlats/data/recipes.json');
+		}
+
 		return this.data;
 	}
 
@@ -50,13 +50,10 @@ class Model {
 	async obtenirRecettes() {
 		const data = await this.getData();
 		const recettes = data.recipes.map(recette => new Recette(recette));
-		// for (let i = 0; i < data.recipes.length; i++) {
-		// 	recettes.push(new Recette(data.recipes[i]));
-		// }
 		return recettes;
 	}
 
-	async rechercherRecettes(texte, ingredients, appareils, ustensiles){
+	async rechercherRecettes(texte, ingredients, appareils, ustensiles) {
 		let recettes = await this.obtenirRecettes();
 		recettes = this.obtenirRecettesParTexte(recettes, texte);
 		recettes = this.obtenirRecettesParIngredients(recettes, ingredients);
@@ -65,120 +62,123 @@ class Model {
 		return recettes;
 	}
 
-	obtenirRecettesParTexte(recettes, motCle){
+	obtenirRecettesParTexte(recettes, motCle) {
 		const resultat = [];
 		for (let i = 0; i < recettes.length; i++) {
 			const recette = recettes[i];
 			const nomRecette = recette.getName.toLowerCase();
 
-			let trouve = nomRecette.search(motCle)>=0? true : false;
-			if(!trouve){
+			let trouve = nomRecette.search(motCle) >= 0;
+			if (!trouve) {
 				const descriptionRecette = recette.getDescription.toLowerCase();
-				trouve = descriptionRecette.search(motCle)>=0? true : false
-				if(!trouve){
+				trouve = descriptionRecette.search(motCle) >= 0;
+				if (!trouve) {
 					const ingredientsRecette = recette.getIngredients;
 					let cpt = 0;
-					do{
+					do {
 						const ingredient = ingredientsRecette[cpt].ingredient.toLowerCase();
-						trouve = ingredient.search(motCle)>=0? true : false;
-						cpt++
-					}while(trouve && cpt===ingredientsRecette.length);
+						trouve = ingredient.search(motCle) >= 0;
+						cpt++;
+					} while (trouve && cpt === ingredientsRecette.length);
 				}
 			}
-			if(trouve){
+
+			if (trouve) {
 				resultat.push(recette);
 			}
 		}
+
 		return resultat;
 	}
 
-	obtenirRecettesParIngredients(recettes, motsCles){
+	obtenirRecettesParIngredients(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
+		if (motsCles.length > 0) {
 			for (let i = 0; i < recettes.length; i++) {
 				const recette = recettes[i];
 				const ingredientsRecette = recette.getIngredients;
 				let trouve = false;
 				let cpt = 0;
-				do{
-					for(let j=0; j<ingredientsRecette.length; j++){
-						if(ingredientsRecette[j].ingredient.toLowerCase() === motsCles[cpt]){
+				do {
+					for (let j = 0; j < ingredientsRecette.length; j++) {
+						if (ingredientsRecette[j].ingredient.toLowerCase() === motsCles[cpt]) {
 							trouve = true;
 							break;
-						}
-						else{
+						} else {
 							trouve = false;
 						}
 					}
-					cpt+=1;
-				}while(cpt<motsCles.length && trouve);
 
-				if(trouve){
+					cpt += 1;
+				} while (cpt < motsCles.length && trouve);
+
+				if (trouve) {
 					resultat.push(recette);
 				}
 			}
-		}
-		else{
+		} else {
 			resultat = recettes;
 		}
+
 		return resultat;
 	}
 
-	obtenirRecettesParAppareils(recettes, motsCles){
+	obtenirRecettesParAppareils(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
+		if (motsCles.length > 0) {
 			for (let i = 0; i < recettes.length; i++) {
 				const recette = recettes[i];
 				const appareilRecette = recette.getAppliance;
 				let trouve = false;
 				let cpt = 0;
-				do{
-					if(motsCles[cpt] === appareilRecette.toLowerCase()){
+				do {
+					if (motsCles[cpt] === appareilRecette.toLowerCase()) {
 						trouve = true;
 					}
-					cpt+=1;
-				}while(cpt<motsCles.length && trouve);
 
-				if(trouve){
+					cpt += 1;
+				} while (cpt < motsCles.length && trouve);
+
+				if (trouve) {
 					resultat.push(recette);
 				}
 			}
-		}
-		else{
+		} else {
 			resultat = recettes;
 		}
+
 		return resultat;
 	}
 
-	obtenirRecettesParUstensiles(recettes, motsCles){
+	obtenirRecettesParUstensiles(recettes, motsCles) {
 		let resultat = [];
-		if(motsCles.length>0){
+		if (motsCles.length > 0) {
 			for (let i = 0; i < recettes.length; i++) {
 				const recette = recettes[i];
 				const ustensilesRecette = recette.getUstensils;
 				let trouve = false;
 				let cpt = 0;
-				do{
-					for(let j=0; j<ustensilesRecette.length; j++){
-						if(ustensilesRecette[j].toLowerCase() === motsCles[cpt]){
+				do {
+					for (let j = 0; j < ustensilesRecette.length; j++) {
+						if (ustensilesRecette[j].toLowerCase() === motsCles[cpt]) {
 							trouve = true;
 							break;
-						}
-						else{
+						} else {
 							trouve = false;
 						}
 					}
-					cpt+=1;
-				}while(cpt<motsCles.length && trouve);
 
-				if(trouve){
+					cpt += 1;
+				} while (cpt < motsCles.length && trouve);
+
+				if (trouve) {
 					resultat.push(recette);
 				}
 			}
-		}
-		else{
+		} else {
 			resultat = recettes;
 		}
+
 		return resultat;
 	}
 }
