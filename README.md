@@ -21,7 +21,7 @@ Dans le dossier Controller, qui assure la communication entre la View et le Mode
 L'ajout d'un observateur n'était pas requis initialement. C'était un défi que j'avais choisi de relever.
 ![observateur](https://github.com/LEBDIOUA/LesPetitsPlats/assets/141866412/73096570-0d5a-415a-9f4c-914bc5227b6a)
 
-## Algorithme de Recherche
+## Algorithme de Recherche - Approche Fonctionnelle
 
 Conformément à la demande, j'ai développé la partie recherche en utilisant deux algorithmes. Bien que les deux aient le même objectif global, qui est de rechercher des recettes en fonction d'un mot-clé donné, leurs approches diffèrent en termes de méthodes et d'étapes spécifiques.
 Dans cette branche, vous trouverez l'algorithme avec l'Approche Fonctionnelle.
