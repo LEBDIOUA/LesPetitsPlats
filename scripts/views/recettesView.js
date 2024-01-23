@@ -46,7 +46,7 @@ class RecettesView {
 		}
 	}
 
-	afficher(recettes) {
+	afficherRecettes(recettes) {
 		const info = document.querySelector('main .info');
 		if (recettes.length === 0) {
 			this.recettes.classList.replace('plein', 'vide');
