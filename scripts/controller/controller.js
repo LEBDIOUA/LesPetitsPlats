@@ -5,7 +5,7 @@ class Controller {
 	constructor() {
 		this.model = Model.getInstance();
 		this.recettesView = new RecettesView();
-		this.ecouteurClic();
+		this.ecouteurClick();
 		this.observerModifications();
 	}
 
@@ -28,26 +28,22 @@ class Controller {
 
 	async afficherRecettes() {
 		const recettes = await this.model.obtenirRecettes();
-		this.recettesView.afficher(recettes);
+		this.recettesView.afficherRecettes(recettes);
 	}
 
-	ecouteurClic() {
-		// Faire la recherche générale apres chaque modification dans l'input à condition qu'il y a plus de 2 caractères saisis
+	ecouteurClick() {
+		// Effectuer une recherche générale après chaque modification dans l'input, à condition qu'il y ait plus de 2 caractères saisis.
 		const textARechercher = document.querySelector('.entete .rechercheBar');
 		textARechercher.addEventListener('input', () => {
 			if (textARechercher.value.length >= 3) {
 				this.rechercherRecettes();
 			} else {
 				const motsCles = document.querySelectorAll('.motCle');
-				if (motsCles.length > 0) {
-					this.rechercherRecettes('sansMotCleGlobal');
-				} else {
-					this.afficherRecettes();
-				}
+				this.rechercherRecettes('sansMotCleGlobal');
 			}
 		});
 
-		// Click pour ouvrir ou reduire les  listes
+		// Programmer l'événement click pour ouvrir ou réduire les listes.
 		const titresListes = document.querySelectorAll('nav .titre');
 		for (let i = 0; i < titresListes.length; i++) {
 			titresListes[i].addEventListener('click', () => {
@@ -57,31 +53,33 @@ class Controller {
 			});
 		}
 
-		// Afficher X ou la supprimer à chaque modification dans le champ input
+		// Afficher l'icône X et le supprimer à chaque modification dans le champ input.
 		const motARechercher = document.querySelector('nav .rechercheBar .aRechercher');
 		const iconSupprimerInput = document.querySelector('nav .rechercheBar .iconSupprimer');
 		motARechercher.addEventListener('input', () => {
 			const nbCaracteres = motARechercher.value.length;
 			if (nbCaracteres === 0 && iconSupprimerInput.classList.contains('affiche')) {
 				iconSupprimerInput.classList.replace('affiche', 'cache');
-				this.rechargerListe();
+				this.chargerListe();
 			} else {
 				iconSupprimerInput.classList.replace('cache', 'affiche');
 			}
 		});
 
-		// Click pour chercher un mot dans la liste et Click pour supprimer le mot saisi
+		// Programmer l'événement click pour rechercher un mot dans la liste et programmer l'événement click pour supprimer le mot saisi.
 		const btnRechercher = motARechercher.parentNode.querySelector('.iconRecherche');
 		btnRechercher.addEventListener('click', this.rechercherDansListe.bind(this));
 		iconSupprimerInput.addEventListener('click', () => {
 			motARechercher.value = '';
 			iconSupprimerInput.classList.replace('affiche', 'cache');
 			motARechercher.focus();
-			this.rechargerListe();
+			this.chargerListe();
 		});
 	}
 
-	rechargerListe() {
+	chargerListe() {
+		/* Récupérer le nom de la liste à charger, mettre la première lettre en majuscule,
+		puis construire et générer une fonction portant le nom 'chargerListe' suivi du nom de la liste.*/
 		const motARechercher = document.querySelector('nav .rechercheBar .aRechercher');
 		const nomListe = document.querySelectorAll('nav ul')[motARechercher.parentNode.classList[1].substr(8) - 1].getAttribute('id');
 		let nomSansListe = nomListe.substr(0, nomListe.length - 5);
@@ -91,14 +89,16 @@ class Controller {
 	}
 
 	rechercherDansListe() {
+		/* Cette fonction permet d'actualiser la liste soit Ingrédients, Appareils ou Ustensiles, 
+		afin de mettre en haut de la liste les mots contenant les caractères recherchés.*/
 		const motARechercher = document.querySelector('nav .rechercheBar .aRechercher');
 		const liste = document.querySelectorAll('nav ul')[motARechercher.parentNode.classList[1].substr(8) - 1];
 		this.recettesView.actualiserListe(liste, motARechercher.value);
 	}
 
-	async rechercherRecettes(motCleGlobal) {
+	async rechercherRecettes(sansMotCleGlobal) {
 		let textARechercher = '';
-		if (motCleGlobal === undefined) {
+		if (sansMotCleGlobal === undefined) {
 			textARechercher = document.querySelector('.entete .rechercheBar').value;
 		}
 
@@ -107,7 +107,7 @@ class Controller {
 		const ustensiles = Array.from(document.querySelectorAll('.motsCles .ustensile'), ustensile => ustensile.textContent.trim().toLowerCase());
 
 		const recettes = await this.model.rechercherRecettes(textARechercher, ingrediends, appareils, ustensiles);
-		this.recettesView.afficher(recettes);
+		this.recettesView.afficherRecettes(recettes);
 	}
 
 	controlerListe(ulListe) {

@@ -63,29 +63,33 @@ class Model {
 	}
 
 	obtenirRecettesParTexte(recettes, motCle) {
-		const resultat = [];
-		for (let i = 0; i < recettes.length; i++) {
-			const recette = recettes[i];
-			const nomRecette = recette.getName.toLowerCase();
+		let resultat = [];
+		if (motCle.length > 0) {
+			for (let i = 0; i < recettes.length; i++) {
+				const recette = recettes[i];
+				const nomRecette = recette.getName.toLowerCase();
 
-			let trouve = nomRecette.search(motCle) >= 0;
-			if (!trouve) {
-				const descriptionRecette = recette.getDescription.toLowerCase();
-				trouve = descriptionRecette.search(motCle) >= 0;
+				let trouve = nomRecette.search(motCle) >= 0;
 				if (!trouve) {
-					const ingredientsRecette = recette.getIngredients;
-					let cpt = 0;
-					do {
-						const ingredient = ingredientsRecette[cpt].ingredient.toLowerCase();
-						trouve = ingredient.search(motCle) >= 0;
-						cpt++;
-					} while (trouve && cpt === ingredientsRecette.length);
+					const descriptionRecette = recette.getDescription.toLowerCase();
+					trouve = descriptionRecette.search(motCle) >= 0;
+					if (!trouve) {
+						const ingredientsRecette = recette.getIngredients;
+						let cpt = 0;
+						do {
+							const ingredient = ingredientsRecette[cpt].getIngredient.toLowerCase();
+							trouve = ingredient.search(motCle) >= 0;
+							cpt++;
+						} while (trouve && cpt === ingredientsRecette.length);
+					}
+				}
+
+				if (trouve) {
+					resultat.push(recette);
 				}
 			}
-
-			if (trouve) {
-				resultat.push(recette);
-			}
+		} else {
+			resultat = recettes;
 		}
 
 		return resultat;
@@ -101,7 +105,7 @@ class Model {
 				let cpt = 0;
 				do {
 					for (let j = 0; j < ingredientsRecette.length; j++) {
-						if (ingredientsRecette[j].ingredient.toLowerCase() === motsCles[cpt]) {
+						if (ingredientsRecette[j].getIngredient.toLowerCase() === motsCles[cpt]) {
 							trouve = true;
 							break;
 						} else {
